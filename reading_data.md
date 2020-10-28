@@ -27,3 +27,40 @@ tabl_marj =
   slice(-1) %>% 
   as_tibble()
 ```
+
+## Star Wars Movie info
+
+Let’s grab more data: Star Wars movies (title, runtime, gross $). It
+lives [here](https://www.imdb.com/list/ls070150896/)
+
+``` r
+url = "https://www.imdb.com/list/ls070150896/"
+
+swm_html = read_html(url)
+```
+
+Grab the elements that I want.
+
+``` r
+title_vec = 
+  swm_html %>% 
+  html_nodes(css = ".lister-item-header a") %>% 
+  html_text()
+
+gross_rev_vec = 
+  swm_html %>% 
+  html_nodes(css = ".text-muted .ghost~ .text-muted+ span") %>% 
+  html_text()
+
+runtime_vec = 
+  swm_html %>% 
+  html_nodes(css = ".runtime") %>% 
+  html_text()
+
+swm_df = 
+  tibble(
+    title = title_vec,
+    gross_rev = gross_rev_vec,
+    runtime = runtime_vec
+  )
+```
