@@ -122,3 +122,65 @@ brfss_2010 =
 Check the imported data compared to what you expected; is something off?
 If so, maybe check the API parameters (is there a limit to how many rows
 you can import by default?).
+
+## Some data aren’t so nice
+
+Let’s look at some Pokemon\!
+
+``` r
+pokemon = 
+  GET("https://pokeapi.co/api/v2/pokemon/1") %>% 
+  content()
+
+pokemon$name
+```
+
+    ## [1] "bulbasaur"
+
+``` r
+pokemon$height
+```
+
+    ## [1] 7
+
+``` r
+pokemon$abilities
+```
+
+    ## [[1]]
+    ## [[1]]$ability
+    ## [[1]]$ability$name
+    ## [1] "overgrow"
+    ## 
+    ## [[1]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/65/"
+    ## 
+    ## 
+    ## [[1]]$is_hidden
+    ## [1] FALSE
+    ## 
+    ## [[1]]$slot
+    ## [1] 1
+    ## 
+    ## 
+    ## [[2]]
+    ## [[2]]$ability
+    ## [[2]]$ability$name
+    ## [1] "chlorophyll"
+    ## 
+    ## [[2]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/34/"
+    ## 
+    ## 
+    ## [[2]]$is_hidden
+    ## [1] TRUE
+    ## 
+    ## [[2]]$slot
+    ## [1] 3
+
+## Closing thoughts
+
+It can be helpful to split data requests in one markdown, and data
+manip/analysis in another. Every time you knit, you pull data anew,
+which can be a lot. Plus, requesting too much data too quickly can cause
+issues (or cause you to be blocked). Be reasonable.
