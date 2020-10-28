@@ -93,3 +93,32 @@ nyc_water_json =
 
 JSON format works fine, but it’s not quite as clean or easy. CSV is
 better.
+
+#### BRFSS data from CDC
+
+Same process, different data.
+
+``` r
+brfss_2010 = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query =list("$limit" = 5000)) %>% 
+  content("parsed")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   year = col_double(),
+    ##   sample_size = col_double(),
+    ##   data_value = col_double(),
+    ##   confidence_limit_low = col_double(),
+    ##   confidence_limit_high = col_double(),
+    ##   display_order = col_double(),
+    ##   locationid = col_logical()
+    ## )
+
+    ## See spec(...) for full column specifications.
+
+Check the imported data compared to what you expected; is something off?
+If so, maybe check the API parameters (is there a limit to how many rows
+you can import by default?).
